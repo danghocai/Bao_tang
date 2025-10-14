@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảo tàng Đà Nẵng - Nơi Lưu Giữ Ký Ức Thành Phố</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #f8f4ee;
+        }
+
+        .hero-section {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/web/487297459_1224717422551376_1948179713290904481_n.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            transition: background-image 0.5s ease-in-out;
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background-color: #4f46e5;
+            border-radius: 2px;
+        }
+
+        /* Hiệu ứng cho phần tử khi cuộn trang */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 50%;
+            background-color: #fff;
+            transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        /* CSS cho Modal */
+        .modal {
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        .modal-content {
+             transition: transform 0.3s ease-in-out;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Header & Navigation -->
+    <header id="header" class="bg-gray-900/80 backdrop-blur-md text-white fixed top-0 left-0 right-0 z-50 transition-all duration-300 shadow-lg">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold tracking-wider">
+                Bảo tàng <span class="text-indigo-400">Đà Nẵng</span>
+            </a>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="#about" class="nav-link">Giới thiệu</a>
+                <a href="#exhibits" class="nav-link">Trưng bày</a>
+                <a href="#events" class="nav-link">Sự kiện</a>
+                <a href="#gallery" class="nav-link">Thư viện</a>
+                <a href="#visit" class="nav-link">Tham quan</a>
+                <button class="buy-ticket-btn bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-5 rounded-full transition duration-300">Mua vé</button>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#about" class="block py-2">Giới thiệu</a>
+            <a href="#exhibits" class="block py-2">Trưng bày</a>
+            <a href="#events" class="block py-2">Sự kiện</a>
+            <a href="#gallery" class="block py-2">Thư viện</a>
+            <a href="#visit" class="block py-2">Tham quan</a>
+            <button class="buy-ticket-btn block mt-2 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-5 rounded-full transition duration-300 text-center">Mua vé</button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section h-screen flex items-center justify-center text-white text-center relative">
+        <div class="z-10">
+            <h1 class="text-4xl md:text-7xl font-extrabold mb-4 drop-shadow-xl">Chào Mừng Đến Với Bảo Tàng Đà Nẵng</h1>
+            <p class="text-lg md:text-2xl mb-8 max-w-3xl mx-auto drop-shadow-lg">Nơi quá khứ sống lại, kể câu chuyện về một thành phố năng động và kiên cường.</p>
+            <a href="#about" class="bg-white text-indigo-600 font-bold py-3 px-8 rounded-full text-lg hover:bg-indigo-100 transition duration-300 transform hover:scale-105">
+                Khám Phá Ngay
+            </a>
+        </div>
+         <!-- Background Changer -->
+        <div class="absolute bottom-5 right-5 z-20 flex space-x-2 bg-black/30 backdrop-blur-sm p-2 rounded-full">
+            <button class="bg-changer-btn w-8 h-8 rounded-full border-2 border-white/50 hover:border-white transition" style="background-image: url('https://images.unsplash.com/photo-1591543620782-1a415a31a903?q=80&w=100&auto=format&fit=crop&h=100'); background-size: cover;" data-bg="https://images.unsplash.com/photo-1591543620782-1a415a31a903?q=80&w=1974&auto=format&fit=crop"></button>
+            <button class="bg-changer-btn w-8 h-8 rounded-full border-2 border-white/50 hover:border-white transition" style="background-image: url('https://images.unsplash.com/photo-1563283134-29831c3a9d91?q=80&w=100&auto=format&fit=crop&h=100'); background-size: cover;" data-bg="https://images.unsplash.com/photo-1563283134-29831c3a9d91?q=80&w=2070&auto=format&fit=crop"></button>
+            <button class="bg-changer-btn w-8 h-8 rounded-full border-2 border-white/50 hover:border-white transition" style="background-image: url('https://images.unsplash.com/photo-1582073400557-0b1e1a53c07c?q=80&w=100&auto=format&fit=crop&h=100'); background-size: cover;" data-bg="https://images.unsplash.com/photo-1582073400557-0b1e1a53c07c?q=80&w=1770&auto=format&fit=crop"></button>
+        </div>
+    </section>
+
+    <main>
+        <!-- About Section -->
+        <section id="about" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="section-title text-4xl font-bold text-gray-900">Về Chúng Tôi</h2>
+                    <p class="text-lg text-gray-600 mt-4 max-w-3xl mx-auto">Bảo tàng Đà Nẵng - Kho báu lưu giữ lịch sử, văn hóa và tinh hoa của thành phố biển năng động.</p>
+                </div>
+                <div class="flex flex-col lg:flex-row items-center gap-12">
+                    <div class="lg:w-1/2 reveal">
+                        <img src="/web/487755465_1224717435884708_1703897031361353085_n.jpg" 
+                             onerror="this.onerror=null;this.src='https://placehold.co/600x400';"
+                             alt="Không gian trưng bày bên trong Bảo tàng Đà Nẵng" 
+                             class="rounded-2xl shadow-2xl w-full h-auto object-cover">
+                    </div>
+                    <div class="lg:w-1/2 reveal">
+                        <h3 class="text-3xl font-semibold mb-4 text-gray-800">Hành trình xuyên thời gian</h3>
+                        <p class="text-gray-600 mb-4 leading-relaxed">Tọa lạc uy nghi trong khuôn viên của Di tích quốc gia đặc biệt Thành Điện Hải, Bảo tàng Đà Nẵng là một công trình kiến trúc hiện đại, kết hợp hài hòa giữa truyền thống và đương đại. Với tổng diện tích trưng bày hơn 3.000m², bảo tàng là nơi hội tụ của hơn 2.500 tư liệu, hình ảnh, và hiện vật quý giá, trong đó có nhiều bảo vật quốc gia. </p>
+                        <p class="text-gray-600 mb-4 leading-relaxed">Đến với Bảo tàng Đà Nẵng, du khách sẽ được dẫn dắt vào một cuộc hành trình đầy cảm xúc, khám phá câu chuyện về mảnh đất và con người Đà Nẵng qua các thời kỳ, từ thuở tiền sơ sử đến một thành phố đáng sống như ngày nay. Mỗi hiện vật đều là một mảnh ghép sống động, tái hiện bức tranh lịch sử - văn hóa hào hùng và đặc sắc của thành phố.</p>
+                        <div class="mt-6 flex flex-wrap gap-6">
+                            <div class="flex items-center space-x-2">
+                                <i data-lucide="layers" class="text-indigo-600"></i>
+                                <span class="font-semibold">3 Tầng Trưng Bày</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i data-lucide="gem" class="text-indigo-600"></i>
+                                <span class="font-semibold">2500+ Hiện Vật</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i data-lucide="map" class="text-indigo-600"></i>
+                                <span class="font-semibold">3000 m² Diện Tích</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exhibits Section -->
+        <section id="exhibits" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="section-title text-4xl font-bold text-gray-900">Không Gian Trưng Bày</h2>
+                    <p class="text-lg text-gray-600 mt-4 max-w-3xl mx-auto">Khám phá các chủ đề đa dạng, tái hiện sống động các giai đoạn lịch sử và nét văn hóa đặc sắc của Đà Nẵng.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Exhibit Card 1 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-all duration-300 group reveal">
+                        <img src="/web/487989768_1224717979217987_8898591903574431669_n.jpg" 
+                             onerror="this.onerror=null;this.src='https://placehold.co/400x300/c7d2fe/3730a3?text=Thiên+Nhiên+Đà+Nẵng';"
+                             class="w-full h-56 object-cover" 
+                             alt="Trưng bày về Thiên nhiên Đà Nẵng">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-2">Đà Nẵng - Thiên Nhiên và Con Người</h3>
+                            <p class="text-gray-600 mb-4">Tìm hiểu về điều kiện tự nhiên, tài nguyên phong phú và sự hình thành của cộng đồng cư dân đầu tiên.</p>
+                            <button class="learn-more-btn font-semibold text-indigo-600 group-hover:text-indigo-800 transition" data-exhibit="nature">Tìm hiểu thêm &rarr;</button>
+                        </div>
+                    </div>
+                    <!-- Exhibit Card 2 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-all duration-300 group reveal" style="transition-delay: 200ms;">
+                        <img src="/web/bao-tang-ho-chi-minh-chi-nhanh-quan-khu-5-010.jpg"
+                             onerror="this.onerror=null;this.src='https://placehold.co/400x300/a5b4fc/312e81?text=Lịch+Sử+Kháng+Chiến';"
+                             class="w-full h-56 object-cover" 
+                             alt="Trưng bày về Đà Nẵng trong chiến đấu">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-2">Đà Nẵng trong Cuộc kháng chiến</h3>
+                            <p class="text-gray-600 mb-4">Những câu chuyện hào hùng về lòng yêu nước, sự kiên cường của quân và dân Đà Nẵng trong hai cuộc kháng chiến vĩ đại.</p>
+                            <button class="learn-more-btn font-semibold text-indigo-600 group-hover:text-indigo-800 transition" data-exhibit="war">Tìm hiểu thêm &rarr;</button>
+                        </div>
+                    </div>
+                    <!-- Exhibit Card 3 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-all duration-300 group reveal" style="transition-delay: 400ms;">
+                        <img src="/web/487312843_1224717399218045_7297566759694275067_n.jpg" 
+                             onerror="this.onerror=null;this.src='https://placehold.co/400x300/818cf8/1e1b4b?text=Văn+Hóa+Làng+Nghề';"
+                             class="w-full h-56 object-cover" 
+                             alt="Trưng bày về các làng nghề truyền thống">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-2">Làng nghề truyền thống</h3>
+                            <p class="text-gray-600 mb-4">Khám phá nét độc đáo của các làng nghề nổi tiếng như Đá mỹ nghệ Non Nước, Nước mắm Nam Ô, Bánh tráng Túy Loan...</p>
+                            <button class="learn-more-btn font-semibold text-indigo-600 group-hover:text-indigo-800 transition" data-exhibit="craft">Tìm hiểu thêm &rarr;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Events Section -->
+        <section id="events" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="section-title text-4xl font-bold text-gray-900">Sự Kiện Sắp Diễn Ra</h2>
+                     <p class="text-lg text-gray-600 mt-4 max-w-3xl mx-auto">Đừng bỏ lỡ các hoạt động, triển lãm chuyên đề và chương trình giáo dục hấp dẫn tại bảo tàng.</p>
+                </div>
+                <div class="max-w-4xl mx-auto">
+                    <!-- Event Item 1 -->
+                    <div class="flex flex-col md:flex-row items-center bg-gray-50 p-6 rounded-2xl mb-6 shadow-md reveal transition-transform duration-300 hover:shadow-xl hover:scale-105">
+                        <div class="flex-shrink-0 text-center md:mr-6 mb-4 md:mb-0 bg-indigo-600 text-white rounded-lg p-4">
+                            <span class="text-4xl font-bold">20</span>
+                            <span class="block text-lg">Thg 11</span>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-semibold text-gray-800">Triển lãm chuyên đề "Dấu ấn Thành Điện Hải"</h3>
+                            <p class="text-gray-600 mt-2">Kỷ niệm ngày Di sản Văn hóa Việt Nam, triển lãm giới thiệu những tư liệu, hình ảnh mới nhất về quá trình bảo tồn và phát huy giá trị của di tích.</p>
+                        </div>
+                    </div>
+                     <!-- Event Item 2 -->
+                    <div class="flex flex-col md:flex-row items-center bg-gray-50 p-6 rounded-2xl mb-6 shadow-md reveal transition-transform duration-300 hover:shadow-xl hover:scale-105">
+                        <div class="flex-shrink-0 text-center md:mr-6 mb-4 md:mb-0 bg-indigo-600 text-white rounded-lg p-4">
+                            <span class="text-4xl font-bold">15</span>
+                            <span class="block text-lg">Thg 12</span>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-semibold text-gray-800">Chương trình "Em làm nhà khảo cổ"</h3>
+                            <p class="text-gray-600 mt-2">Một hoạt động trải nghiệm thú vị dành cho các em thiếu nhi, giúp các em tìm hiểu về công việc của một nhà khảo cổ học ngay tại bảo tàng.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="section-title text-4xl font-bold text-gray-900">Thư Viện Hình Ảnh</h2>
+                    <p class="text-lg text-gray-600 mt-4 max-w-3xl mx-auto">Chiêm ngưỡng những khoảnh khắc và hiện vật ấn tượng tại bảo tàng.</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="group reveal"><img class="gallery-item h-auto max-w-full rounded-lg shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 cursor-pointer" src="/web/1.jpg" alt="Hiện vật gốm Chăm Pa"></div>
+                    <div class="group reveal"><img class="gallery-item h-auto max-w-full rounded-lg shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 cursor-pointer" src="/web/2.jpg" alt="Tượng điêu khắc cổ"></div>
+                    <div class="group reveal"><img class="gallery-item h-auto max-w-full rounded-lg shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 cursor-pointer" src="/web/3.jpg" alt="Bản đồ cổ"></div>
+                    <div class="group reveal"><img class="gallery-item h-auto max-w-full rounded-lg shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 cursor-pointer" src="/web/4.jpg" alt="Cổ vật chiến tranh"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Visit Information Section -->
+        <section id="visit" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                 <div class="text-center mb-16">
+                    <h2 class="section-title text-4xl font-bold text-gray-900">Lên Kế Hoạch Tham Quan</h2>
+                     <p class="text-lg text-gray-600 mt-4 max-w-3xl mx-auto">Chúng tôi đã sẵn sàng chào đón bạn. Dưới đây là những thông tin cần thiết cho chuyến đi của bạn.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
+                    <!-- Info Card 1 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg reveal hover:shadow-indigo-200 transition">
+                        <i data-lucide="clock" class="mx-auto h-12 w-12 text-indigo-600 mb-4"></i>
+                        <h3 class="text-2xl font-bold mb-2">Giờ Mở Cửa</h3>
+                        <p class="text-gray-600">Thứ Ba - Chủ Nhật</p>
+                        <p class="text-gray-600">Sáng: 08:00 - 11:30</p>
+                        <p class="text-gray-600">Chiều: 13:30 - 17:00</p>
+                    </div>
+                     <!-- Info Card 2 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg reveal hover:shadow-indigo-200 transition" style="transition-delay: 200ms;">
+                        <i data-lucide="ticket" class="mx-auto h-12 w-12 text-indigo-600 mb-4"></i>
+                        <h3 class="text-2xl font-bold mb-2">Giá Vé</h3>
+                        <p class="text-gray-600">Người lớn: 20.000 VNĐ/người</p>
+                        <p class="text-gray-600">Sinh viên: 10.000 VNĐ/người</p>
+                        <p class="text-gray-600">Miễn phí cho trẻ em dưới 6 tuổi</p>
+                    </div>
+                     <!-- Info Card 3 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg reveal hover:shadow-indigo-200 transition" style="transition-delay: 400ms;">
+                        <i data-lucide="map-pin" class="mx-auto h-12 w-12 text-indigo-600 mb-4"></i>
+                        <h3 class="text-2xl font-bold mb-2">Địa Chỉ</h3>
+                        <p class="text-gray-600">Số 24 Trần Phú, Thạch Thang</p>
+                        <p class="text-gray-600">Hải Châu, Đà Nẵng</p>
+                        <a href="https://www.google.com/maps/place/B%E1%BA%A3o+t%C3%A0ng+%C4%90%C3%A0+N%E1%BA%B5ng/@16.0694887,108.221516,17z/" target="_blank" rel="noopener noreferrer" class="text-indigo-600 font-semibold mt-2 inline-block">Xem bản đồ &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals Section -->
+
+    <!-- Lightbox Modal (For Gallery) -->
+    <div id="lightbox" class="modal fixed inset-0 bg-black bg-opacity-90 flex justify-center items-center z-50 hidden opacity-0 p-4">
+        <span id="lightbox-close" class="absolute top-5 right-8 text-white text-5xl font-bold cursor-pointer hover:text-gray-300 transition">&times;</span>
+        <img id="lightbox-image" class="max-w-full max-h-full rounded-lg" src="" alt="Hình ảnh phóng to">
+    </div>
+    
+    <!-- Ticket Registration Modal -->
+    <div id="ticket-modal" class="modal fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50 hidden opacity-0 p-4">
+        <div class="modal-content bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md transform scale-95">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-3xl font-bold text-gray-800">Đăng Ký Vé Tham Quan</h2>
+                <button id="ticket-modal-close" class="text-gray-500 hover:text-gray-800 transition">
+                    <i data-lucide="x" class="w-8 h-8"></i>
+                </button>
+            </div>
+            <form id="ticket-form">
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-700 font-semibold mb-2">Họ và Tên</label>
+                    <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700 font-semibold mb-2">Email</label>
+                    <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                </div>
+                 <div class="mb-6">
+                    <label for="tickets" class="block text-gray-700 font-semibold mb-2">Số Lượng Vé</label>
+                    <input type="number" id="tickets" name="tickets" min="1" value="1" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105">
+                    Xác Nhận Đăng Ký
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Success Message Modal -->
+     <div id="success-modal" class="modal fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50 hidden opacity-0 p-4">
+        <div class="modal-content bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md text-center transform scale-95">
+            <div class="mx-auto bg-green-100 rounded-full w-20 h-20 flex items-center justify-center mb-6">
+                <i data-lucide="check" class="w-12 h-12 text-green-600"></i>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Đăng Ký Thành Công!</h2>
+            <p class="text-gray-600 mb-6">Cảm ơn bạn đã đăng ký. Thông tin vé sẽ sớm được gửi đến email của bạn. Hẹn gặp bạn tại Bảo tàng Đà Nẵng!</p>
+            <button id="success-modal-close" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                Đóng
+            </button>
+        </div>
+    </div>
+
+    <!-- Exhibit Details Modal -->
+    <div id="details-modal" class="modal fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50 hidden opacity-0 p-4">
+        <div class="modal-content bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto transform scale-95">
+            <div class="p-8">
+                <div class="flex justify-between items-start mb-4">
+                    <h2 id="details-title" class="text-3xl font-bold text-gray-800"></h2>
+                    <button id="details-modal-close" class="text-gray-500 hover:text-gray-800 transition flex-shrink-0 ml-4">
+                        <i data-lucide="x" class="w-8 h-8"></i>
+                    </button>
+                </div>
+                <img id="details-image" src="" alt="Hình ảnh chi tiết" class="w-full h-64 object-cover rounded-lg mb-6">
+                <div id="details-content" class="text-gray-600 leading-relaxed space-y-4"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-gray-900 text-white">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Bảo tàng Đà Nẵng</h3>
+                    <p class="text-gray-400">Số 24 Trần Phú, Phường Thạch Thang, Quận Hải Châu, Thành phố Đà Nẵng.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Liên kết nhanh</h3>
+                    <ul>
+                        <li class="mb-2"><a href="#about" class="text-gray-400 hover:text-white transition">Giới thiệu</a></li>
+                        <li class="mb-2"><a href="#exhibits" class="text-gray-400 hover:text-white transition">Trưng bày</a></li>
+                        <li class="mb-2"><a href="#events" class="text-gray-400 hover:text-white transition">Sự kiện</a></li>
+                         <li class="mb-2"><a href="#gallery" class="text-gray-400 hover:text-white transition">Thư viện</a></li>
+                        <li class="mb-2"><a href="#visit" class="text-gray-400 hover:text-white transition">Tham quan</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Kết nối với chúng tôi</h3>
+                    <div class="flex justify-center md:justify-start space-x-4">
+                        <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition"><i data-lucide="facebook"></i></a>
+                        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition"><i data-lucide="instagram"></i></a>
+                        <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition"><i data-lucide="youtube"></i></a>
+                    </div>
+                    <p class="text-gray-400 mt-4">Email: btdn@danang.gov.vn</p>
+                    <p class="text-gray-400">Điện thoại: (0236) 3886 236</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-6 text-center text-gray-500">
+                <p>&copy; 2025 Bảo tàng Đà Nẵng. Mọi quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        // Khởi tạo Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Đóng mobile menu khi click vào link
+        document.querySelectorAll('#mobile-menu a, #mobile-menu button').forEach(item => {
+            item.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Hiệu ứng Header khi cuộn trang
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('py-2');
+                header.classList.remove('py-4');
+            } else {
+                header.classList.remove('py-2');
+                header.classList.add('py-4');
+            }
+        });
+
+        // Hiệu ứng xuất hiện cho các phần tử khi cuộn
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        revealElements.forEach(el => {
+            revealObserver.observe(el);
+        });
+        
+        // --- Modal Control ---
+        function openModal(modal) {
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('.modal-content').classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeModal(modal) {
+            modal.classList.add('opacity-0');
+            modal.querySelector('.modal-content').classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Chức năng Lightbox cho Thư viện ảnh
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightbox-image');
+        const lightboxClose = document.getElementById('lightbox-close');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                lightboxImage.src = item.src;
+                openModal(lightbox);
+            });
+        });
+
+        lightboxClose.addEventListener('click', () => closeModal(lightbox));
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeModal(lightbox);
+            }
+        });
+        
+        // --- Ticket Modal Logic ---
+        const ticketModal = document.getElementById('ticket-modal');
+        const successModal = document.getElementById('success-modal');
+        const buyTicketBtns = document.querySelectorAll('.buy-ticket-btn');
+        const ticketForm = document.getElementById('ticket-form');
+
+        buyTicketBtns.forEach(btn => {
+            btn.addEventListener('click', () => openModal(ticketModal));
+        });
+        
+        document.getElementById('ticket-modal-close').addEventListener('click', () => closeModal(ticketModal));
+        ticketModal.addEventListener('click', (e) => {
+            if (e.target === ticketModal) closeModal(ticketModal);
+        });
+
+        ticketForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            closeModal(ticketModal);
+            setTimeout(() => {
+                 openModal(successModal);
+            }, 350);
+            ticketForm.reset();
+        });
+
+        document.getElementById('success-modal-close').addEventListener('click', () => closeModal(successModal));
+        successModal.addEventListener('click', (e) => {
+            if (e.target === successModal) closeModal(successModal);
+        });
+        
+        // --- Exhibit Details Modal Logic ---
+        const detailsModal = document.getElementById('details-modal');
+        const learnMoreBtns = document.querySelectorAll('.learn-more-btn');
+        
+        const exhibitDetails = {
+            nature: {
+                title: "Đà Nẵng - Thiên Nhiên và Con Người",
+                image: "https://images.unsplash.com/photo-1629015965413-562e6e307f59?q=80&w=1854&auto=format&fit=crop",
+                content: `
+                    <p>Không gian trưng bày này mang đến một cái nhìn toàn cảnh về sự đa dạng sinh học và địa chất của Đà Nẵng. Du khách sẽ được khám phá các mô hình về hệ sinh thái rừng, biển, và sông, từ bán đảo Sơn Trà với loài Voọc chà vá chân nâu quý hiếm đến những rạn san hô đầy màu sắc.</p>
+                    <p>Bên cạnh đó, khu vực này còn giới thiệu về quá trình hình thành và phát triển của các cộng đồng cư dân đầu tiên trên mảnh đất này, thông qua các di vật khảo cổ học từ nền văn hóa Sa Huỳnh, Chăm Pa, và Đại Việt. Đây là minh chứng cho một lịch sử định cư lâu đời và sự tương tác hài hòa giữa con người và thiên nhiên.</p>
+                `
+            },
+            war: {
+                title: "Đà Nẵng trong Cuộc kháng chiến",
+                image: "https://images.unsplash.com/photo-1596701042121-591242337a8b?q=80&w=1770&auto=format&fit=crop",
+                content: `
+                    <p>Đây là không gian tái hiện lại những trang sử hào hùng, bi tráng của quân và dân Đà Nẵng trong hai cuộc kháng chiến chống Pháp và chống Mỹ. Với nhiều hiện vật gốc như vũ khí, quân trang, thư từ, và các vật dụng cá nhân của chiến sĩ, khu trưng bày mang lại cảm xúc sâu sắc về lòng yêu nước và tinh thần bất khuất.</p>
+                    <p>Các sa bàn, mô hình và phim tài liệu được trình chiếu giúp du khách hình dung rõ nét hơn về các trận đánh lớn, đặc biệt là trận tấn công đầu tiên của liên quân Pháp - Tây Ban Nha vào Đà Nẵng năm 1858, mở đầu cho cuộc kháng chiến của dân tộc. Không gian này là lời tri ân sâu sắc đến các thế hệ đã hy sinh vì độc lập, tự do của Tổ quốc.</p>
+                `
+            },
+            craft: {
+                title: "Làng nghề truyền thống",
+                image: "https://images.unsplash.com/photo-1582550926583-7cb5b2636a0f?q=80&w=1770&auto=format&fit=crop",
+                content: `
+                    <p>Khu trưng bày giới thiệu về sự tài hoa, khéo léo của người thợ thủ công Đà Nẵng qua các sản phẩm tinh xảo của những làng nghề truyền thống trứ danh. Mỗi làng nghề mang một câu chuyện văn hóa riêng, gắn liền với đời sống của người dân địa phương.</p>
+                    <p>Du khách sẽ được chiêm ngưỡng những tác phẩm điêu khắc đá mỹ nghệ Non Nước, tìm hiểu quy trình làm nước mắm Nam Ô nức tiếng, hay khám phá vị ngon của chiếc bánh tráng Túy Loan. Không gian này không chỉ tôn vinh giá trị của các sản phẩm thủ công mà còn là nơi lưu giữ và phát huy bản sắc văn hóa độc đáo của Đà Nẵng.</p>
+                `
+            }
+        };
+
+        learnMoreBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const exhibitKey = btn.dataset.exhibit;
+                const data = exhibitDetails[exhibitKey];
+                
+                document.getElementById('details-title').textContent = data.title;
+                document.getElementById('details-image').src = data.image;
+                document.getElementById('details-image').alt = `Hình ảnh về ${data.title}`;
+                document.getElementById('details-content').innerHTML = data.content;
+
+                openModal(detailsModal);
+            });
+        });
+
+        document.getElementById('details-modal-close').addEventListener('click', () => closeModal(detailsModal));
+        detailsModal.addEventListener('click', (e) => {
+            // Chỉ đóng khi click vào nền mờ, không đóng khi click vào nội dung bên trong
+            if (e.target === detailsModal) closeModal(detailsModal);
+        });
+
+        // --- Header Background Changer ---
+        const heroSection = document.querySelector('.hero-section');
+        const bgChangerBtns = document.querySelectorAll('.bg-changer-btn');
+        bgChangerBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const newBgUrl = btn.dataset.bg;
+                heroSection.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${newBgUrl}')`;
+            });
+        });
+    </script>
+</body>
+
+</html>
